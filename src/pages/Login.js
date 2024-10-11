@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-//import { Input } from 'antd';
 import CustomInput from "../components/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -39,7 +38,7 @@ const Login = () => {
     } else {
       navigate("");
     }
-  }, [user, isError, isSuccess, isLoading ]);
+  }, [user, isError, isSuccess, isLoading]);
 
   return (
     <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
@@ -52,7 +51,7 @@ const Login = () => {
         <h3 className="text-center title">Login</h3>
         <p className="text-center">Login to your account to continue.</p>
         <div className="error text-center">
-          {message.message == "Rejected" ? "You are not an Admin" : ""}
+          {message.message === "Rejected" ? "You are not an Admin" : ""}
         </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -61,9 +60,8 @@ const Login = () => {
             label="Email Address"
             id="email"
             val={formik.values.email}
-            onCh={formik.handleChange("email")}
-            onBl={formik.handleBlur("email")}
-            
+            onChg={formik.handleChange("email")}
+            onBlr={formik.handleBlur("email")}
           />
           <div className="error">
             {formik.touched.email && formik.errors.email ? (
@@ -76,11 +74,11 @@ const Login = () => {
             label="Password"
             id="pass"
             val={formik.values.password}
-            onCh={formik.handleChange("password")}
-            onBl={formik.handleBlur("password")}
+            onChg={formik.handleChange("password")}
+            onBlr={formik.handleBlur("password")}
           />
           <div className="error mt-2">
-            {formik.touched.password && formik.errors.password }
+            {formik.touched.password && formik.errors.password}
             {/* // ? ( <div>{formik.errors.password}</div>
             // ) : null} */}
           </div>

@@ -25,7 +25,7 @@ const columns = [
 const data1 = [];
 for (let i = 0; i < 46; i++) {
   data1.push({
-      key: i,
+      key: i + 1,
       name: `Edward King ${i}`,
       product: 32,
       status: `London, Park Lane no. ${i}`,

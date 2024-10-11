@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Table } from 'antd';
+import { Link } from "react-router-dom";
+import { FaRegEdit } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductCategories } from '../features/pcategory/pcategorySlice';
+
 
 const columns = [
     {
@@ -9,28 +15,38 @@ const columns = [
     {
         title: 'Name',
         dataIndex: 'name',
+        sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-        title: 'Product',
-        dataIndex: 'product',
+      title: "Action",
+      dataIndex: "action",
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-  },
   ];
   
+const Categorylist = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProductCategories());
+  }, []);
+  const categoryState = useSelector((state) => state.pcategory.pCategories);
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < categoryState.length; i++) {
     data1.push({
-        key: i,
-        name: `Edward King ${i}`,
-        product: 32,
-        status: `London, Park Lane no. ${i}`,
+        key: i + 1,
+        name: categoryState[i].title,
+        action: (
+          <>
+            <Link to="/" className="fs-3 text-danger">
+              <FaRegEdit />
+            </Link>
+            <Link to="/" className="ms-3 fs-3 text-danger">
+              <AiFillDelete />
+            </Link>
+          </>
+        ),
     });
   }
 
-const Categorylist = () => {
   return (
     <div>
         <h3 className="mb-4 title">Product Categories</h3>
