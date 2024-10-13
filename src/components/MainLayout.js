@@ -3,12 +3,15 @@ import { MdDashboard } from "react-icons/md";
 import { BsCart3 } from "react-icons/bs";
 import { GrCatalog } from "react-icons/gr";
 import { HiUsers } from "react-icons/hi2";
-//import { AiFillProduct } from "react-icons/ai";
+import { RiCoupon5Line } from "react-icons/ri";
 import { BiCategoryAlt } from "react-icons/bi";
 import { MdOutlineFormatColorFill } from "react-icons/md";
 import { FaClipboardList } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
-
+import { ToastContainer } from "react-toastify";
+import { HiClipboardDocumentList } from "react-icons/hi2";
+import { FaEnvelopeOpenText } from "react-icons/fa";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Link, Outlet } from 'react-router-dom';
 import {
@@ -94,8 +97,25 @@ const MainLayout = () => {
             },
             {
               key: 'orders',
-              icon: <FaClipboardList className='fs-4' />,
+              icon: <HiClipboardDocumentList className='fs-4' />,
               label: 'Orders',
+            },
+            {
+              key: 'marketing',
+              icon: <RiCoupon5Line className='fs-4' />,
+              label: 'Marketing',
+              children: [
+                {
+                  key: 'coupon',
+                  icon: <FaEnvelopeOpenText className='fs-4' />,
+                  label: 'Add Coupon',
+                },
+                {
+                  key: 'coupon-list',
+                  icon: <RiCoupon5Line className='fs-4' />,
+                  label: 'Coupon List',
+                },
+              ]
             },
             {
               key: 'enquiries',
@@ -179,6 +199,17 @@ const MainLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
+          <ToastContainer 
+          position="top-right"
+          autoClose={250}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          theme="light"
+          />
           <Outlet/>
         </Content>
       </Layout>

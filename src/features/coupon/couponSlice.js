@@ -1,53 +1,53 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import pcategoryService from "./pcategoryService";
+import couponService from "./couponService";
 
-export const getProductCategories = createAsyncThunk(
-  "productCategory/get-categories",
+
+export const getCoupons = createAsyncThunk(
+  "coupon/get-coupons",
   async (thunkAPI) => {
     try {
-      return await pcategoryService.getProductCategories();
+      return await couponService.getCoupons();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-export const createCategory = createAsyncThunk(
-  "productCategory/create-category",
-  async (categoryData, thunkAPI) => {
+export const createCoupon = createAsyncThunk( 
+  "coupon/create-coupon",
+  async (couponData, thunkAPI) => {
     try {
-      return await pcategoryService.createCategory(categoryData);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const updateAProductCategory = createAsyncThunk(
-  "productCategory/update-category",
-  async (category, thunkAPI) => {
-    try {
-      return await pcategoryService.updateProductCategory(category);
+      return await couponService.createCoupon(couponData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const deleteAProductCategory = createAsyncThunk(
-  "productCategory/delete-category",
+export const deleteACoupon = createAsyncThunk(
+  "coupon/delete-coupon",
   async (id, thunkAPI) => {
     try {
-      return await pcategoryService.deleteProductCategory(id);
+      return await couponService.deleteCoupon(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-export const getAProductCategory = createAsyncThunk(
-  "productCategory/get-product-category",
+export const getACoupon = createAsyncThunk(
+  "coupon/get-coupon",
   async (id, thunkAPI) => {
     try {
-      return await pcategoryService.getProductCategory(id);
+      return await couponService.getCoupon(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const updateACoupon = createAsyncThunk(
+  "color/update-coupon",
+  async (coupon, thunkAPI) => {
+    try {
+      return await couponService.updateCoupon(coupon);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -57,89 +57,94 @@ export const getAProductCategory = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-    pCategories: [],
+    coupons: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: "",
 };
 
-export const pcategorySlice = createSlice({
-  name: "pCategories",
+export const couponSlice = createSlice({
+  name: "coupons",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
       builder
-        .addCase(getProductCategories.pending,(state) => {
+        .addCase(getCoupons.pending,(state) => {
           state.isLoading = true;
         })
-        .addCase(getProductCategories.fulfilled, (state, action) => {
+        .addCase(getCoupons.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isError = false;
             state.isSuccess = true;
-            state.pCategories = action.payload;
+            state.coupons = action.payload;
         })
-        .addCase(getProductCategories.rejected, (state, action) => {
+        .addCase(getCoupons.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.isSuccess = false;
             state.message = action.error;
         })
-        .addCase(createCategory.pending,(state) => {
+        .addCase(createCoupon.pending,(state) => {
           state.isLoading = true;
         })
-        .addCase(createCategory.fulfilled, (state, action) => {
+        .addCase(createCoupon.fulfilled, (state, action) => {
             state.isLoading = false;
             state.isError = false;
             state.isSuccess = true;
-            state.createdCategory = action.payload;
+            state.createdCoupon = action.payload;
         })
-        .addCase(createCategory.rejected, (state, action) => {
+        .addCase(createCoupon.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.isSuccess = false;
             state.message = action.error;
         })
-        .addCase(updateAProductCategory.pending, (state) => {
+        .addCase(deleteACoupon.pending, (state) => {
           state.isLoading = true;
         })
-        .addCase(updateAProductCategory.fulfilled, (state, action) => {
+        .addCase(deleteACoupon.fulfilled, (state, action) => {
           state.isLoading = false;
           state.isError = false;
           state.isSuccess = true;
-          state.updatedCategory = action.payload;
+          state.deletedCoupon = action.payload;
         })
-        .addCase(updateAProductCategory.rejected, (state, action) => {
+        .addCase(deleteACoupon.rejected, (state, action) => {
           state.isLoading = false;
           state.isError = true;
           state.isSuccess = false;
           state.message = action.error;
         })
-        .addCase(deleteAProductCategory.pending, (state) => {
+        .addCase(getACoupon.pending, (state) => {
           state.isLoading = true;
         })
-        .addCase(deleteAProductCategory.fulfilled, (state, action) => {
+        .addCase(getACoupon.fulfilled, (state, action) => {
           state.isLoading = false;
           state.isError = false;
           state.isSuccess = true;
-          state.deletedCategory = action.payload;
+          state.couponName = action.payload.name;
+          state.couponDiscount = action.payload.discount;
+          state.couponExpiry = action.payload.expiry;
         })
-        .addCase(deleteAProductCategory.rejected, (state, action) => {
+        .addCase(getACoupon.rejected, (state, action) => {
           state.isLoading = false;
           state.isError = true;
           state.isSuccess = false;
           state.message = action.error;
         })
-        .addCase(getAProductCategory.pending, (state) => {
+        .addCase(updateACoupon.pending, (state) => {
           state.isLoading = true;
         })
-        .addCase(getAProductCategory.fulfilled, (state, action) => {
+        .addCase(updateACoupon.fulfilled, (state, action) => {
           state.isLoading = false;
           state.isError = false;
           state.isSuccess = true;
-          state.categoryName = action.payload.title;
+          state.updatedCoupon = action.payload;
+          // state.couponName = action.payload[0].name;
+          // state.couponDiscount = action.payload[0].discount;
+          // state.couponExpiry = action.payload[0].expiry;
         })
-        .addCase(getAProductCategory.rejected, (state, action) => {
+        .addCase(updateACoupon.rejected, (state, action) => {
           state.isLoading = false;
           state.isError = true;
           state.isSuccess = false;
@@ -148,4 +153,8 @@ export const pcategorySlice = createSlice({
         .addCase(resetState, () => initialState);
   },
 });
-export default pcategorySlice.reducer;
+export default couponSlice.reducer;
+
+
+
+
