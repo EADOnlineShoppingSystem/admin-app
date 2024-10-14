@@ -5,8 +5,6 @@ import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from '../features/auth/authSlice';
 import { Link } from "react-router-dom";
-
-
 const columns = [
     {
         title: 'SNo',
@@ -45,13 +43,11 @@ const Orders = () => {
     data1.push({
         key: i + 1,
         name: orderState[i].orderby.firstName,
-        product: orderState[i].products.map((i, j) => {
-          return(
-            <ul key={j}>
-              <li>{i.product.title}</li>
-            </ul>
-          ) ;
-        }),
+        product: (
+            <Link to={`/admin/order/${orderState[i].orderby._id}`}>
+              View Orders
+            </Link>
+          ),
         amount: orderState[i].paymentIntent.amount,
         date: new Date(orderState[i].createdAt).toLocaleString(),
         action: (
@@ -69,12 +65,7 @@ const Orders = () => {
   return (
     <div>
         <h3 className="mb-4 title">Orders</h3>
-        <div>
-        <Table
-             columns={columns}
-             dataSource={data1}
-          /> 
-        </div>
+        <div>{<Table columns={columns} dataSource={data1} />}</div>
     </div>
   )
 }

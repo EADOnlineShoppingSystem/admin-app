@@ -73,7 +73,7 @@ const Colorlist = () => {
     setOpen(false);
     setTimeout(() => {
       dispatch(getColors());
-      toast.success("Category deleted successfully!");
+      toast.success("Color deleted successfully!");
     }, 100);
   };
   return (
