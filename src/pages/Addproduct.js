@@ -25,7 +25,8 @@ let schema = Yup.object().shape({
   description: Yup.string().required("Description is required."),
   price: Yup.number().required("Price is required."),
   category: Yup.string().required("Category is required."),
-  tags: Yup.string().required("Tags is required."),
+  sku: Yup.string().required("SKU is required."),
+  price: Yup.number().required("Price is required."),
   color: Yup.array()
     .min(1, "Pick at least one color")
     .required("Color is required."),
@@ -56,6 +57,7 @@ const Addproduct = () => {
     productPric,
     productCat,
     productTag,
+    productSKU,
     productColor,
     productQuant,
     productImages,
@@ -150,6 +152,7 @@ const Addproduct = () => {
       price: productPric || "",
       category: productCat || "",
       tags: productTag || "",
+      sku: productSKU || "",
       color: productColor || [],
       quantity: productQuant || "",
       images: images,
@@ -298,6 +301,17 @@ const Addproduct = () => {
             onChange={(i) => handleColors(i)}
             options={coloropt}
           /> */}
+          <CustomInput
+            type="text"
+            label="Stock-Keeping Unit (SKU)"
+            name="sku"
+            val={formik.values.sku}
+            onChg={formik.handleChange("sku")}
+            onBlr={formik.handleBlur("sku")}
+          />
+          <div className="error">
+            {formik.touched.sku && formik.errors.sku}
+          </div>
 <Select
   mode="multiple"
   allowClear

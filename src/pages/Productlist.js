@@ -23,6 +23,10 @@ const columns = [
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
+    title: "SKU",
+    dataIndex: "sku",
+  },
+  {
     title: "Category",
     dataIndex: "category",
     sorter: (a, b) => (a.category?.length || 0) - (b.category?.length || 0),
@@ -84,6 +88,7 @@ const Productlist = () => {
     data1.push({
       key: i + 1,
       title: productState[i].title,
+      sku: productState[i].sku,
       category: productState[i].category,
       color: productState[i].color,
       //  color: Array.isArray(productState[i].color)
