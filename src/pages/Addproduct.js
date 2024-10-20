@@ -1,3 +1,400 @@
+// import React, { useEffect, useState, useRef } from "react";
+// import CustomInput from "../components/CustomInput";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
+// import { toast } from "react-toastify";
+// import { useFormik } from "formik";
+// import * as Yup from "yup";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getProductCategories } from "../features/pcategory/pcategorySlice";
+// import { Select } from "antd";
+// import { getColors } from "../features/color/colorSlice";
+// import "react-widgets/styles.css";
+// import Dropzone from "react-dropzone";
+// import { delImg, uploadImg } from "../features/upload/uploadSlice";
+// import {
+//   createProducts,
+//   getAProduct,
+//   updateAProduct,
+//   resetState,
+// } from "../features/product/productSlice";
+// import { useLocation, useNavigate } from "react-router-dom";
+
+// let schema = Yup.object().shape({
+//   title: Yup.string().required("Title is required."),
+//   description: Yup.string().required("Description is required."),
+//   price: Yup.number().required("Price is required."),
+//   category: Yup.string().required("Category is required."),
+//   sku: Yup.string().required("SKU is required."),
+//   price: Yup.number().required("Price is required."),
+//   color: Yup.array()
+//     .min(1, "Pick at least one color")
+//     .required("Color is required."),
+//     size: Yup.number().required("Size is required."),
+//   quantity: Yup.number().required("Quantity is Required"),
+// });
+
+// const Addproduct = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const [color, setColor] = useState([]);
+//   const [images, setImages] = useState([]);
+
+//   const quillRef = useRef();
+
+//   const getProductId = location.pathname.split("/")[3];
+//   const imgState = useSelector((state) => state.upload.images);
+//   const catState = useSelector((state) => state.pcategory.pCategories);
+//   const colorState = useSelector((state) => state.color.colors);
+//   const newProduct = useSelector((state) => state.product);
+//   const {
+//     isSuccess,
+//     isError,
+//     isLoading,
+//     createdProduct,
+//     productName,
+//     productDesc,
+//     productPric,
+//     productCat,
+//     productTag,
+//     productSKU,
+//     productColor,
+//     productSize,
+//     productQuant,
+//     productImages,
+//     updatedProduct,
+//   } = newProduct;
+
+//   useEffect(() => {
+//     dispatch(resetState());
+//     dispatch(getProductCategories());
+//     dispatch(getColors());
+//   }, [dispatch]);
+
+//   useEffect(() => {
+//     if (getProductId !== undefined) {
+//       dispatch(getAProduct(getProductId));
+//       // img.push(productImages);
+//     } else {
+//       dispatch(resetState());
+//     }
+//   }, [getProductId, dispatch]);
+
+//   useEffect(() => {
+//     if (isSuccess && createdProduct) {
+//       toast.success("Product Added Successfully!");
+//       navigate("/admin/list-product");
+//     }
+//     if (isSuccess && updatedProduct) {
+//       toast.success("Product Updated Successfullly!");
+//       navigate("/admin/list-product");
+//     }
+//     if (isError) {
+//       toast.error("Something Went Wrong!");
+//     }
+//   }, [isSuccess, isError, isLoading, createdProduct, updatedProduct, navigate]);
+
+//   useEffect(() => {
+//     if (productColor && productColor.length > 0) {
+//       setColor(productColor.map((c) => c._id));
+//     }
+//     if (productImages && productImages.length > 0) {
+//       setImages(productImages);
+//     }
+//   }, [productColor, productImages]);
+
+//   // const coloropt = [];
+//   // colorState.forEach((i) => {
+//   //   coloropt.push({
+//   //     label: i.title,
+//   //     value: i._id,
+//   //   });
+//   // });
+
+//   const coloropt = colorState.map((i) => ({
+//     label: i.title,
+//     value: i._id,
+//   }));
+
+//   const handleColors = (selectedColors) => {
+//     formik.setFieldValue("color", selectedColors);
+//   };
+
+//   // const img = [];
+//   // imgState.forEach((i) => {
+//   //   img.push({
+//   //     public_id: i.public_id,
+//   //     url: i.url,
+//   //   });
+//   // });
+
+//   // useEffect(() => {
+//   //   formik.values.color = color ? color : " ";
+//   //  // formik.values.color = productColor ? productColor : " ";
+//   //   formik.values.images = img;
+//   // }, [productColor, productImages]);
+
+//   // useEffect(() => {
+//   //   formik.values.color = color ? color : " ";
+//   //   formik.values.images = img;
+//   // }, [productColor, productImages]);
+
+//   const formik = useFormik({
+//     enableReinitialize: true,
+//     initialValues: {
+//       title: productName || "",
+//       description: productDesc || "",
+//       price: productPric || "",
+//       category: productCat || "",
+//       tags: productTag || "",
+//       sku: productSKU || "",
+//       color: productColor || [],
+//       size: productSize || "",
+//       quantity: productQuant || "",
+//       images: images,
+//     },
+//     validationSchema: schema,
+//     onSubmit: (values) => {
+//       if (getProductId !== undefined) {
+//         const data = { id: getProductId, productData: values };
+//         dispatch(updateAProduct(data));
+//       } else {
+//         dispatch(createProducts(values));
+//         formik.resetForm();
+//         setColor([]);
+//         setImages([]);
+//         setTimeout(() => {
+//           dispatch(resetState());
+//         }, 300);
+//       }
+//     },
+//   });
+
+//   // const handleColors = (e) => {
+//   //   setColor(e);
+//   //   console.log(color);
+//   // };
+
+//   const handleImages = (acceptedFiles) => {
+//     dispatch(uploadImg(acceptedFiles));
+//   };
+
+//   useEffect(() => {
+//     if (imgState.length > 0) {
+//       formik.setFieldValue("images", [...formik.values.images, ...imgState]);
+//     }
+//   }, [imgState]);
+
+//   const handleImageDelete = (public_id) => {
+//     dispatch(delImg(public_id));
+//     formik.setFieldValue(
+//       "images",
+//       formik.values.images.filter((img) => img.public_id !== public_id)
+//     );
+//   };
+
+//   // const [desc, setDesc] = useState();
+//   // const handleDesc = (e) => {
+//   //   setDesc(e);
+//   // };
+//   return (
+//     <div>
+//       <h3 className="mb-4 title">
+//         {getProductId !== undefined ? "Edit" : "Add"} Product
+//       </h3>
+//       <div>
+//         <form
+//           action=""
+//           onSubmit={formik.handleSubmit}
+//           className="d-flex gap-3 flex-column"
+//         >
+//           <CustomInput
+//             type="text"
+//             label="Enter Product Title"
+//             name="title"
+//             val={formik.values.title}
+//             onChg={formik.handleChange("title")}
+//             onBlr={formik.handleBlur("title")}
+//           />
+//           <div className="error">
+//             {formik.touched.title && formik.errors.title}
+//           </div>
+//           <div className="">
+//             <ReactQuill
+//               ref={quillRef}
+//               theme="snow"
+//               name="description"
+//               placeholder="Enter Product Description"
+//               value={formik.values.description}
+//               onChange={formik.handleChange("description")}
+//               style={{
+//                 backgroundColor: "white" /* White background */,
+//                 color: "black" /* Black text */,
+//               }}
+//             />
+//             <div className="error">
+//               {formik.touched.description && formik.errors.description}
+//             </div>
+//           </div>
+//           <CustomInput
+//             type="number"
+//             label="Enter Product Price"
+//             name="price"
+//             val={formik.values.price}
+//             onChg={formik.handleChange("price")}
+//             onBlr={formik.handleBlur("price")}
+//           />
+//           <div className="error">
+//             {formik.touched.price && formik.errors.price}
+//           </div>
+//           <select
+//             name="category"
+//             value={formik.values.category}
+//             onChange={formik.handleChange("category")}
+//             onBlur={formik.handleBlur("category")}
+//             className="form-control py-3 mb-3"
+//             id=""
+//           >
+//             <option value="">Select Category</option>
+//             {catState.map((i, j) => {
+//               return (
+//                 <option key={j} value={i.title}>
+//                   {i.title}
+//                 </option>
+//               );
+//             })}
+//           </select>
+//           <div className="error">
+//             {formik.touched.category && formik.errors.category}
+//           </div>
+//           <select
+//             name="tags"
+//             value={formik.values.tags}
+//             onChange={formik.handleChange("tags")}
+//             onBlur={formik.handleBlur("tags")}
+//             className="form-control py-3 mb-3"
+//             id=""
+//           >
+//             <option value="" disabled>
+//               Select Tag
+//             </option>
+//             <option value="featured">Featured</option>
+//             <option value="popular">Popular</option>
+//             <option value="special">Special</option>
+//           </select>
+//           <div className="error">
+//             {formik.touched.tags && formik.errors.tags}
+//           </div>
+//           {/* <Select
+//             mode="multiple"
+//             allowClear
+//             className="w-100"
+//             placeholder="Select colors"
+//             defaultValue={color}
+//             onChange={(i) => handleColors(i)}
+//             options={coloropt}
+//           /> */}
+//           <CustomInput
+//             type="text"
+//             label="Stock-Keeping Unit (SKU)"
+//             name="sku"
+//             val={formik.values.sku}
+//             onChg={formik.handleChange("sku")}
+//             onBlr={formik.handleBlur("sku")}
+//           />
+//           <div className="error">{formik.touched.sku && formik.errors.sku}</div>
+//           <Select
+//             mode="multiple"
+//             allowClear
+//             className="w-100"
+//             placeholder="Select colors"
+//             value={formik.values.color}
+//             onChange={handleColors}
+//             options={coloropt}
+//           />
+//           <div className="error">
+//             {formik.touched.color && formik.errors.color}
+//           </div>
+//           <select
+//             multiple={true}
+//             name="size"
+//             value={formik.values.size}
+//             onChange={formik.handleChange("size")}
+//             onBlur={formik.handleBlur("size")}
+//             className="form-control py-3 mb-3"
+//             id=""
+//           >
+//             <option value="" disabled>
+//               Select Size
+//             </option>
+//             <option value="featured">XS</option>
+//             <option value="popular">S</option>
+//             <option value="special">M</option>
+//             <option value="featured">L</option>
+//             <option value="popular">XL</option>
+//             <option value="special">2XL</option>
+//             <option value="featured">3XL</option>
+//             <option value="popular">4XL</option>
+//             <option value="special">5XL</option>
+//           </select>
+//           <div className="error">
+//             {formik.touched.size && formik.errors.size}
+//           </div>
+//           <CustomInput
+//             type="number"
+//             label="Enter Product Quantity"
+//             name="quantity"
+//             onChg={formik.handleChange("quantity")}
+//             onBlr={formik.handleBlur("quantity")}
+//             val={formik.values.quantity}
+//           />
+//           <div className="error">
+//             {formik.touched.quantity && formik.errors.quantity}
+//           </div>
+//           <div className="bg-white border-1 p-5 text-center">
+//             <Dropzone onDrop={handleImages}>
+//               {({ getRootProps, getInputProps }) => (
+//                 <section>
+//                   <div {...getRootProps()}>
+//                     <input {...getInputProps()} />
+//                     <p style={{ cursor: "pointer" }}>
+//                       Drag 'n' drop some files here, or click to select files
+//                     </p>
+//                   </div>
+//                 </section>
+//               )}
+//             </Dropzone>
+//           </div>
+//           <div className="showimages d-flex flex-wrap gap-3">
+//             {formik.values.images.map((i, j) => {
+//               return (
+//                 <div className="position-relative" key={j}>
+//                   <button
+//                     type="button"
+//                     onClick={() => handleImageDelete(i.public_id)}
+//                     className="btn-close position-absolute"
+//                     style={{ top: "10px", right: "10px" }}
+//                   ></button>
+//                   <img src={i.url} alt="" width={200} height={200} />
+//                 </div>
+//               );
+//             })}
+//           </div>
+//           <button
+//             className="btn btn-success border-0 rounded-3 my-5"
+//             type="submit"
+//           >
+//             {getProductId !== undefined ? "Edit" : "Add"} Product
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Addproduct;
+
 import React, { useEffect, useState, useRef } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
@@ -30,6 +427,9 @@ let schema = Yup.object().shape({
   color: Yup.array()
     .min(1, "Pick at least one color")
     .required("Color is required."),
+  size: Yup.array()
+    .min(1, "Pick at least one size")
+    .required("Size is required."),
   quantity: Yup.number().required("Quantity is Required"),
 });
 
@@ -59,6 +459,7 @@ const Addproduct = () => {
     productTag,
     productSKU,
     productColor,
+    productSize,
     productQuant,
     productImages,
     updatedProduct,
@@ -68,18 +469,15 @@ const Addproduct = () => {
     dispatch(resetState());
     dispatch(getProductCategories());
     dispatch(getColors());
-   
   }, [dispatch]);
 
   useEffect(() => {
     if (getProductId !== undefined) {
       dispatch(getAProduct(getProductId));
-     // img.push(productImages);
     } else {
       dispatch(resetState());
     }
   }, [getProductId, dispatch]);
-
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
@@ -95,24 +493,14 @@ const Addproduct = () => {
     }
   }, [isSuccess, isError, isLoading, createdProduct, updatedProduct, navigate]);
 
-
   useEffect(() => {
     if (productColor && productColor.length > 0) {
-      setColor(productColor.map(c => c._id));
+      setColor(productColor.map((c) => c._id));
     }
     if (productImages && productImages.length > 0) {
       setImages(productImages);
     }
   }, [productColor, productImages]);
-
-
-  // const coloropt = [];
-  // colorState.forEach((i) => {
-  //   coloropt.push({
-  //     label: i.title,
-  //     value: i._id,
-  //   });
-  // });
 
   const coloropt = colorState.map((i) => ({
     label: i.title,
@@ -122,27 +510,6 @@ const Addproduct = () => {
   const handleColors = (selectedColors) => {
     formik.setFieldValue("color", selectedColors);
   };
-
-  // const img = [];
-  // imgState.forEach((i) => {
-  //   img.push({
-  //     public_id: i.public_id,
-  //     url: i.url,
-  //   });
-  // });
-
-  // useEffect(() => {
-  //   formik.values.color = color ? color : " ";
-  //  // formik.values.color = productColor ? productColor : " ";
-  //   formik.values.images = img;
-  // }, [productColor, productImages]);
-
-
-
-  // useEffect(() => {
-  //   formik.values.color = color ? color : " ";
-  //   formik.values.images = img;
-  // }, [productColor, productImages]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -154,6 +521,7 @@ const Addproduct = () => {
       tags: productTag || "",
       sku: productSKU || "",
       color: productColor || [],
+      size: productSize || [],
       quantity: productQuant || "",
       images: images,
     },
@@ -174,36 +542,24 @@ const Addproduct = () => {
     },
   });
 
-  // const handleColors = (e) => {
-  //   setColor(e);
-  //   console.log(color);
-  // };
-
-  
-  
   const handleImages = (acceptedFiles) => {
     dispatch(uploadImg(acceptedFiles));
   };
-  
+
   useEffect(() => {
     if (imgState.length > 0) {
       formik.setFieldValue("images", [...formik.values.images, ...imgState]);
     }
   }, [imgState]);
-  
+
   const handleImageDelete = (public_id) => {
     dispatch(delImg(public_id));
     formik.setFieldValue(
       "images",
-      formik.values.images.filter(img => img.public_id !== public_id)
+      formik.values.images.filter((img) => img.public_id !== public_id)
     );
   };
 
-
-  // const [desc, setDesc] = useState();
-  // const handleDesc = (e) => {
-  //   setDesc(e);
-  // };
   return (
     <div>
       <h3 className="mb-4 title">
@@ -292,15 +648,6 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.tags && formik.errors.tags}
           </div>
-          {/* <Select
-            mode="multiple"
-            allowClear
-            className="w-100"
-            placeholder="Select colors"
-            defaultValue={color}
-            onChange={(i) => handleColors(i)}
-            options={coloropt}
-          /> */}
           <CustomInput
             type="text"
             label="Stock-Keeping Unit (SKU)"
@@ -309,21 +656,78 @@ const Addproduct = () => {
             onChg={formik.handleChange("sku")}
             onBlr={formik.handleBlur("sku")}
           />
-          <div className="error">
-            {formik.touched.sku && formik.errors.sku}
-          </div>
-<Select
-  mode="multiple"
-  allowClear
-  className="w-100"
-  placeholder="Select colors"
-  value={formik.values.color}
-  onChange={handleColors}
-  options={coloropt}
-/>
+          <div className="error">{formik.touched.sku && formik.errors.sku}</div>
+          <Select
+            mode="multiple"
+            allowClear
+            className="w-100"
+            placeholder="Select colors"
+            value={formik.values.color}
+            onChange={handleColors}
+            options={coloropt}
+          />
           <div className="error">
             {formik.touched.color && formik.errors.color}
           </div>
+
+          <div className="form-group mb-3">
+            <label
+              style={{
+                fontSize: "16px",
+                marginBottom: "16px",
+                color: "#403f3f",
+              }}
+            >
+              Select Sizes
+            </label>
+            <div className="d-flex flex-wrap">
+              {["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"].map(
+                (size) => (
+                  <div
+                    key={size}
+                    className="form-check me-3"
+                    style={{ paddingLeft: "50px" }}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="size"
+                      value={size}
+                      id={size}
+                      checked={formik.values.size.includes(size)}
+                      onChange={(e) => {
+                        const selectedSize = e.target.value;
+                        let newSizeArray = [...formik.values.size];
+
+                        if (e.target.checked) {
+                          newSizeArray.push(selectedSize); // Add selected size
+                        } else {
+                          newSizeArray = newSizeArray.filter(
+                            (s) => s !== selectedSize
+                          ); // Remove unselected size
+                        }
+
+                        formik.setFieldValue("size", newSizeArray); // Update Formik's size field
+                      }}
+                      onBlur={formik.handleBlur("size")}
+                      style={{ width: "17px", height: "17px" }}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={size}
+                      style={{ fontSize: "14px", marginLeft: "10px" }}
+                    >
+                      {size}
+                    </label>
+                  </div>
+                )
+              )}
+            </div>
+            <div className="error">
+              {formik.touched.size && formik.errors.size}
+            </div>
+          </div>
+
           <CustomInput
             type="number"
             label="Enter Product Quantity"
@@ -350,20 +754,20 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className="showimages d-flex flex-wrap gap-3">
-  {formik.values.images.map((i, j) => {
-    return (
-      <div className="position-relative" key={j}>
-        <button
-          type="button"
-          onClick={() => handleImageDelete(i.public_id)}
-          className="btn-close position-absolute"
-          style={{ top: "10px", right: "10px" }}
-        ></button>
-        <img src={i.url} alt="" width={200} height={200} />
-      </div>
-    );
-  })}
-</div>
+            {formik.values.images.map((i, j) => {
+              return (
+                <div className="position-relative" key={j}>
+                  <button
+                    type="button"
+                    onClick={() => handleImageDelete(i.public_id)}
+                    className="btn-close position-absolute"
+                    style={{ top: "10px", right: "10px" }}
+                  ></button>
+                  <img src={i.url} alt="" width={200} height={200} />
+                </div>
+              );
+            })}
+          </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
@@ -377,15 +781,6 @@ const Addproduct = () => {
 };
 
 export default Addproduct;
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState, useRef } from "react";
 // import CustomInput from "../components/CustomInput";
@@ -503,7 +898,7 @@ export default Addproduct;
 //       toast.error("Something Went Wrong!");
 //     }
 //   }, [isSuccess, isError, isLoading, createdProduct, updatedProduct]);
-  
+
 //   const coloropt = [];
 //   colorState.forEach((i) => {
 //     coloropt.push({
@@ -523,13 +918,10 @@ export default Addproduct;
 //   //   formik.values.images = img;
 //   // }, [productColor ,productImages]);
 
-  
 //   useEffect(() => {
 //     formik.setFieldValue('color', color);
 //     formik.setFieldValue('images', img);
 //   }, [color, img]);
-
-  
 
 //   // const handleColors = (e) => {
 //   //   setColor(e);
@@ -666,7 +1058,7 @@ export default Addproduct;
 //             className="w-100"
 //             placeholder="Select colors"
 //             value={color}
-//             onChange={handleColors} 
+//             onChange={handleColors}
 //             options={coloropt}
 //           />
 //           <div className="error">

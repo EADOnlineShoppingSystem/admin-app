@@ -32,29 +32,21 @@ const columns = [
     sorter: (a, b) => (a.category?.length || 0) - (b.category?.length || 0),
     //sorter: (a, b) => a.category.length - b.category.length,
   },
-  {
-    title: "Color",
-    dataIndex: "color",
-  },
-
   // {
   //   title: "Color",
   //   dataIndex: "color",
-  //   render: (colors) => {
-  //     // Handle cases where colors might be an array of objects or strings
-  //     if (Array.isArray(colors)) {
-  //       return colors.map(color => {
-  //         // If color is an object with label property
-  //         if (typeof color === 'object' && color.label) {
-  //           return color.label;
-  //         }
-  //         // If color is a simple string
-  //         return color;
-  //       }).join(', ');
-  //     }
-  //     return colors || '-';
-  //   }
   // },
+  {
+    title: "Color",
+    dataIndex: "color",
+    render: (colors) => (
+      <span>
+        {Array.isArray(colors) 
+          ? colors.map(color => color.title).join(", ")
+          : "No color"}
+      </span>
+    ),
+  },
   {
     title: "Price",
     dataIndex: "price",
@@ -83,42 +75,59 @@ const Productlist = () => {
     dispatch(getProducts());
   }, []);
   const productState = useSelector((state) => state.product.products);
-  const data1 = [];
-  for (let i = 0; i < productState.length; i++) {
-    data1.push({
-      key: i + 1,
-      title: productState[i].title,
-      sku: productState[i].sku,
-      category: productState[i].category,
-      color: productState[i].color,
-      //  color: Array.isArray(productState[i].color)
-      //  ? productState[i].color.map(c => c.label).join(", ") // If color is an array, join labels with a comma
-      //  : productState[i].color?.label || "N/A",
-      price: `${productState[i].price}`,
-      action: (
-        <>
-          {/* <Link
-            to={`/admin/product/${productState[i].id}`}
-            className=" fs-3 text-danger"
-          >
-            <FaRegEdit />
-          </Link> */}
-          <Link
-            to={`/admin/product/${productState[i]._id}`}
-            className="fs-3 text-danger"
-          >
-            <FaRegEdit />
-          </Link>
-          <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(productState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      ),
-    });
-  }
+  // const data1 = [];
+  // for (let i = 0; i < productState.length; i++) {
+  //   data1.push({
+  //     key: i + 1,
+  //     title: productState[i].title,
+  //     sku: productState[i].sku,
+  //     category: productState[i].category,
+  //     color: productState[i].color,
+  //     price: `${productState[i].price}`,
+  //     action: (
+  //       <>
+  //         <Link
+  //           to={`/admin/product/${productState[i]._id}`}
+  //           className="fs-3 text-danger"
+  //         >
+  //           <FaRegEdit />
+  //         </Link>
+  //         <button
+  //           className="ms-3 fs-3 text-danger bg-transparent border-0"
+  //           onClick={() => showModal(productState[i]._id)}
+  //         >
+  //           <AiFillDelete />
+  //         </button>
+  //       </>
+  //     ),
+  //   });
+  // }
+
+  const data1 = productState.map((product, index) => ({
+    key: index + 1,
+    title: product.title,
+    sku: product.sku,
+    category: product.category,
+    color: product.color, // This will now contain the populated color objects
+    price: `${product.price}`,
+    action: (
+      <>
+        <Link
+          to={`/admin/product/${product._id}`}
+          className="fs-3 text-danger"
+        >
+          <FaRegEdit />
+        </Link>
+        <button
+          className="ms-3 fs-3 text-danger bg-transparent border-0"
+          onClick={() => showModal(product._id)}
+        >
+          <AiFillDelete />
+        </button>
+      </>
+    ),
+  }));
+
   const deleteProduct = (e) => {
     dispatch(deleteAProduct(e));
     setOpen(false);
