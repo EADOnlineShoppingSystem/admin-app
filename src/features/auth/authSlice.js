@@ -44,6 +44,18 @@ export const getOrderByUser = createAsyncThunk(
   }
 );
 
+// export const getOrderByUser = createAsyncThunk(
+//   "order/get-order",
+//   async ( thunkAPI) => {
+//     try {
+//       return await authService.getOrder();
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
+
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -86,6 +98,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getOrderByUser.fulfilled, (state, action) => {
+        console.log("getOrderByUser payload:", action.payload);
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;

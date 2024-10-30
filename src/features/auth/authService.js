@@ -21,6 +21,17 @@ const getOrder = async (id) => {
   return response.data;
 };
 
+// const getOrder = async () => {
+//   const response = await axios.post(
+//     `${base_url}user/getmyorders`,
+//     "",
+//     config
+//   );
+//   return response.data;
+// };
+
+
+
 const authService = {
   login,
   getOrders,
