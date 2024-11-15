@@ -18,12 +18,13 @@ const updateProduct = async (product) => {
       {
         title: product.productData.title,
         description: product.productData.description,
-        price: product.productData.price,
+        price1: product.productData.price1,
+        price2: product.productData.price2,
         category: product.productData.category,
         tags: product.productData.tags,
-        sku: product.productData.sku,
+        storage: product.productData.storage,
         color: product.productData.color,
-        size: product.productData.size,
+        warranty: product.productData.warranty,
         quantity: product.productData.quantity,
         images: product.productData.images,
         

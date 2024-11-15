@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteACoupon, getCoupons, resetState } from "../features/coupon/couponSlice";
+import {
+  deleteACoupon,
+  getCoupons,
+  resetState,
+} from "../features/coupon/couponSlice";
 import CustomModal from "../components/CustomModal";
 import { toast } from "react-toastify";
 
@@ -26,8 +30,7 @@ const columns = [
   {
     title: "Expiry",
     dataIndex: "expiry",
-  //  sorter: (a, b) => a.name.length - b.name.length,
-  sorter: (a, b) => new Date(a.expiry) - new Date(b.expiry),
+    sorter: (a, b) => new Date(a.expiry) - new Date(b.expiry),
   },
   {
     title: "Action",
@@ -58,8 +61,7 @@ const Couponlist = () => {
       key: i + 1,
       name: couponState[i].name,
       discount: couponState[i].discount,
-     // expiry: new Date(couponState[i].expiry).toLocaleString(),
-     expiry: new Date(couponState[i].expiry).toLocaleString(),
+      expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
           <Link
@@ -105,4 +107,3 @@ const Couponlist = () => {
 };
 
 export default Couponlist;
-

@@ -35,32 +35,16 @@ const AddCoupon = () => {
     updatedCoupon,
   } = newCoupon;
 
-  // const changeDateFormat = (date) => {
-  //   const newDate = new Date(date).toLocaleDateString();
-  //   const [month, day, year] = newDate.split("/");
-  //   return [year, month, day].join("-");
-  // };
-
-  // const changeDateFormat = (date) => {
-  //   if (!date) return "";
-  //   const newDate = new Date(date);
-  //   const year = newDate.getFullYear();
-  //   const month = String(newDate.getMonth() + 1).padStart(2, '0');
-  //   const day = String(newDate.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // };
-
   const changeDateTimeFormat = (dateTime) => {
     if (!dateTime) return "";
     const newDate = new Date(dateTime);
     const year = newDate.getFullYear();
-    const month = String(newDate.getMonth() + 1).padStart(2, '0');
-    const day = String(newDate.getDate()).padStart(2, '0');
-    const hours = String(newDate.getHours()).padStart(2, '0');
-    const minutes = String(newDate.getMinutes()).padStart(2, '0');
+    const month = String(newDate.getMonth() + 1).padStart(2, "0");
+    const day = String(newDate.getDate()).padStart(2, "0");
+    const hours = String(newDate.getHours()).padStart(2, "0");
+    const minutes = String(newDate.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
 
   useEffect(() => {
     if (getCouponId !== undefined) {
@@ -90,7 +74,7 @@ const AddCoupon = () => {
       expiry: changeDateTimeFormat(couponExpiry) || "",
       discount: couponDiscount || "",
     },
-    
+
     validationSchema: schema,
     onSubmit: (values) => {
       if (getCouponId !== undefined) {
@@ -126,25 +110,15 @@ const AddCoupon = () => {
           <div className="error">
             {formik.touched.name && formik.errors.name}
           </div>
-          {/* <CustomInput
-            type="date"
+          <CustomInput
+            type="datetime-local"
             name="expiry"
-            label="Enter Expiry Date"
+            label="Enter Expiry Date and Time"
             val={formik.values.expiry}
             onChg={formik.handleChange("expiry")}
             onBlr={formik.handleBlur("expiry")}
-            id="date"
-          /> */}
-
-<CustomInput
-  type="datetime-local"
-  name="expiry"
-  label="Enter Expiry Date and Time"
-  val={formik.values.expiry}
-  onChg={formik.handleChange("expiry")}
-  onBlr={formik.handleBlur("expiry")}
-  id="expiry"
-/>
+            id="expiry"
+          />
           <div className="error">
             {formik.touched.expiry && formik.errors.expiry}
           </div>
@@ -173,5 +147,3 @@ const AddCoupon = () => {
 };
 
 export default AddCoupon;
-
-

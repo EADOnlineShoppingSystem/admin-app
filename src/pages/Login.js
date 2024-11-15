@@ -95,6 +95,9 @@ const Login = () => {
           >
             Login
           </button>
+          <Link to="/signup" className="button1 signup">
+                      SignUp
+                    </Link>
         </form>
       </div>
     </div>

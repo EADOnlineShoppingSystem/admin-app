@@ -110,12 +110,13 @@ export const productSlice = createSlice({
           state.isSuccess = true;
           state.productName = action.payload.title;
           state.productDesc = action.payload.description;
-          state.productPric = action.payload.price;
+          state.productPric1 = action.payload.price1;
+          state.productPric2 = action.payload.price1;
           state.productCat = action.payload.category;
           state.productTag = action.payload.tags;
-          state.productSKU = action.payload.sku;
+          state.productStg = action.payload.storage;
           state.productColor = action.payload.color;
-          state.productSize = action.payload.size;
+          state.productWarranty = action.payload.warranty;
           state.productQuant = action.payload.quantity;
           state.productImages = action.payload.images;
         })

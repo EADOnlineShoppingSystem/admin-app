@@ -18,6 +18,7 @@ import AddCoupon from './pages/AddCoupon';
 import Couponlist from './pages/Couponlist';
 import ViewEnq from './pages/ViewEnq';
 import ViewOrder from './pages/ViewOrder';
+import AdminSignup from './pages/AdminSignup';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path='list-product' element={<Productlist />} />
           <Route path='product' element={<Addproduct />} />
           <Route path="product/:id" element={<Addproduct />} />
+          <Route path="signup" element={<AdminSignup />}></Route>
         </Route>
       </Routes>
     </Router>
