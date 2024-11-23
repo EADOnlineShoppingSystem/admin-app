@@ -78,16 +78,16 @@ const MainLayout = () => {
                   icon: <BiCategoryAlt className='fs-4' />,
                   label: 'Category',
                 },
-                {
-                  key: 'list-category',
-                  icon: <BiCategoryAlt className='fs-4' />,
-                  label: 'Category List',
-                },
-                {
-                  key: 'color',
-                  icon: <MdOutlineFormatColorFill className='fs-4' />,
-                  label: 'Color',
-                },
+                // {
+                //   key: 'list-category',
+                //   icon: <BiCategoryAlt className='fs-4' />,
+                //   label: 'Category List',
+                // },
+                // {
+                //   key: 'color',
+                //   icon: <MdOutlineFormatColorFill className='fs-4' />,
+                //   label: 'Color',
+                // },
                 {
                   key: 'list-color',
                   icon: <MdOutlineFormatColorFill className='fs-4' />,
@@ -100,23 +100,23 @@ const MainLayout = () => {
               icon: <HiClipboardDocumentList className='fs-4' />,
               label: 'Orders',
             },
-            {
-              key: 'marketing',
-              icon: <RiCoupon5Line className='fs-4' />,
-              label: 'Marketing',
-              children: [
-                {
-                  key: 'coupon',
-                  icon: <FaEnvelopeOpenText className='fs-4' />,
-                  label: 'Add Coupon',
-                },
-                {
-                  key: 'coupon-list',
-                  icon: <RiCoupon5Line className='fs-4' />,
-                  label: 'Coupon List',
-                },
-              ]
-            },
+            // {
+            //   key: 'marketing',
+            //   icon: <RiCoupon5Line className='fs-4' />,
+            //   label: 'Marketing',
+            //   children: [
+            //     {
+            //       key: 'coupon',
+            //       icon: <FaEnvelopeOpenText className='fs-4' />,
+            //       label: 'Add Coupon',
+            //     },
+            //     {
+            //       key: 'coupon-list',
+            //       icon: <RiCoupon5Line className='fs-4' />,
+            //       label: 'Coupon List',
+            //     },
+            //   ]
+            // },
             {
               key: 'enquiries',
               icon: <FaClipboardList className='fs-4' />,

@@ -9,9 +9,9 @@ import Enquiries from './pages/Enquiries';
 import Orders from './pages/Orders';
 import Customers from './pages/Customers';
 import Colorlist from './pages/Colorlist';
-import Categorylist from './pages/Categorylist';
+//import Categorylist from './pages/Categorylist';
 import Productlist from './pages/Productlist';
-import Addcolor from './pages/Addcolor';
+//import Addcolor from './pages/Addcolor';
 import Addcat from './pages/Addcat';
 import Addproduct from './pages/Addproduct';
 import AddCoupon from './pages/AddCoupon';
@@ -35,12 +35,12 @@ function App() {
           <Route path='order/:id' element={<ViewOrder />} />
           <Route path='customers' element={<Customers />} />
           <Route path='list-color' element={<Colorlist />} />
-          <Route path='color' element={<Addcolor />} />
-          <Route path="color/:id" element={<Addcolor />} />
+          {/* <Route path='color' element={<Addcolor />} />
+          <Route path="color/:id" element={<Addcolor />} /> */}
           <Route path='coupon-list' element={<Couponlist />} />
           <Route path='coupon' element={<AddCoupon />} />
           <Route path="coupon/:id" element={<AddCoupon />} />
-          <Route path='list-category' element={<Categorylist />} />
+          {/* <Route path='list-category' element={<Categorylist />} /> */}
           <Route path='category' element={<Addcat />} />
           <Route path="category/:id" element={<Addcat />} />
           <Route path='list-product' element={<Productlist />} />
