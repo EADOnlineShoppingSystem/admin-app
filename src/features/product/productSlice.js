@@ -1,11 +1,22 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import productService from "./productService";
 
-export const getProducts = createAsyncThunk(
-  "product/get-products",
+export const createCategories = createAsyncThunk(
+  "product/create-categories",
+  async (categoryData, thunkAPI) => {
+    try {
+      return await productService.createCategory(categoryData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getCategories = createAsyncThunk(
+  "product/get-categories",
   async (thunkAPI) => {
     try {
-      return await productService.getProducts();
+      return await productService.getCategories();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -17,6 +28,28 @@ export const createProducts = createAsyncThunk(
   async (productData, thunkAPI) => {
     try {
       return await productService.createProduct(productData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getProducts = createAsyncThunk(
+  "product/get-products",
+  async (thunkAPI) => {
+    try {
+      return await productService.getProducts();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getProductsByACategory = createAsyncThunk(
+  "product/get-products-category",
+  async (categoryName, thunkAPI) => {
+    try {
+      return await productService.getProductsByCategory(categoryName);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -71,6 +104,37 @@ export const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
       builder
+      .addCase(createCategories.pending,(state) => {
+        state.isLoading = true;
+      })
+      .addCase(createCategories.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isError = false;
+          state.isSuccess = true;
+          state.products = action.payload;
+      })
+      .addCase(createCategories.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.isSuccess = false;
+          state.message = action.error;
+      })
+      .addCase(getCategories.pending,(state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCategories.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isError = false;
+          state.isSuccess = true;
+          state.products = action.payload;
+      })
+      .addCase(getCategories.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.isSuccess = false;
+          state.message = action.error;
+      })
+
         .addCase(getProducts.pending,(state) => {
           state.isLoading = true;
         })
@@ -86,6 +150,23 @@ export const productSlice = createSlice({
             state.isSuccess = false;
             state.message = action.error;
         })
+
+        .addCase(getProductsByACategory.pending,(state) => {
+          state.isLoading = true;
+        })
+        .addCase(getProductsByACategory.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = true;
+            state.products = action.payload;
+        })
+        .addCase(getProductsByACategory.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.isSuccess = false;
+            state.message = action.error;
+        })
+
         .addCase(createProducts.pending, (state) => {
           state.isLoading = true;
         })

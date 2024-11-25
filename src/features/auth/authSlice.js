@@ -10,6 +10,7 @@ const initialState = {
   isError: false,
   isLoading: false,
   isSuccess: false,
+  isAuthenticated: !!getUserfromLocalStorage,
   message: "",
 };
 export const login = createAsyncThunk(
@@ -69,14 +70,16 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
+        state.isAuthenticated = true;
         state.user = action.payload;
-        state.message = "success";
+        state.message = action.payload.message || "Login successful";
       })
       .addCase(login.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
         state.isLoading = false;
+        state.isAuthenticated = false;
+        state.message = action.payload?.message || "Login failed";
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;

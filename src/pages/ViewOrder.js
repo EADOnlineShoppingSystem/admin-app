@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { FaRegEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { getOrdersByUserId, getAllOrders } from "../features/orders/orderSlice";
 import { Link, useLocation } from "react-router-dom";
 
 
@@ -47,22 +47,22 @@ const ViewOrder = () => {
   const userId = location.pathname.split("/")[3];
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOrderByUser(userId));
+    dispatch(getOrdersByUserId(userId));
   }, []);
 
   
-  const orderState = useSelector((state) => state?.auth?.orderbyuser?.[0]?.products || []);
+  const orderState = useSelector((state) => state?.order?.orderbyuser?.[0]?.products || []);
 
   console.log(orderState);
   const data1 = [];
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
-      name: orderState[i]?.product?.title,
-      category: orderState[i].product.category,
+      name: orderState[i]?.product?.productTitle,
+      category: orderState[i].product.categoryName,
       count: orderState[i].count,
       amount: orderState[i].product.price,
-      color: orderState[i].product.color,
+      color: orderState[i].product.colors,
       date: orderState[i].product.createdAt,
       action: (
         <>

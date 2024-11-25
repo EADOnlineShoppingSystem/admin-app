@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import { FaRegEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from '../features/auth/authSlice';
+import { getAllOrders } from '../features/orders/orderSlice';
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -40,10 +40,11 @@ const columns = [
 const Orders = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOrders());
-  }, []);
+    dispatch(getAllOrders());
+  }, [dispatch]);
 
-  const orderState = useSelector((state) => state?.auth?.orders);
+  const orderState = useSelector((state) => state?.order?.orders);
+  const isLoading = useSelector((state) => state.order.isLoading);
   
   const data1 = [];
   for (let i = 0; i < orderState?.length; i++) {
@@ -55,7 +56,7 @@ const Orders = () => {
           View Orders
         </Link>
       ),
-      amount: orderState[i]?.totalPrice,
+      amount: orderState[i]?.price,
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
       status: orderState[i]?.orderStatus,
       action: (
