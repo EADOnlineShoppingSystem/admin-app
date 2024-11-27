@@ -1,10 +1,11 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import Dropzone from "react-dropzone";
 import {
   createCategory,
   getAProductCategory,
@@ -31,6 +32,8 @@ const Addcat = () => {
     updatedCategory,
   } = newCategory;
 
+  const [image, setImage] = useState(null); // State to handle image
+
   useEffect(() => {
     if (getPCatId !== undefined) {
       dispatch(getAProductCategory(getPCatId));
@@ -44,7 +47,7 @@ const Addcat = () => {
       toast.success("Category Added Successfully!");
     }
     if (isSuccess && updatedCategory) {
-      toast.success("Category Updated Successfullly!");
+      toast.success("Category Updated Successfully!");
       navigate("/admin/list-category");
     }
     if (isError) {
@@ -58,14 +61,21 @@ const Addcat = () => {
       title: categoryName || "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append("title", values.title);
+      if (image) {
+        formData.append("image", image); // Add image to formData
+      }
+
       if (getPCatId !== undefined) {
-        const data = { id: getPCatId, pCatData: values };
+        const data = { id: getPCatId, pCatData: formData };
         dispatch(updateAProductCategory(data));
         dispatch(resetState());
       } else {
-        dispatch(createCategory(values));
+        dispatch(createCategory(formData));
         formik.resetForm();
+        setImage(null); // Reset image
         setTimeout(() => {
           dispatch(resetState());
         }, 300);
@@ -91,6 +101,60 @@ const Addcat = () => {
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
+
+          {/* Image Upload Section */}
+          <div className="form-group">
+            <label>Upload Category Image</label>
+            <Dropzone
+              onDrop={(acceptedFiles) => {
+                if (acceptedFiles.length > 0) {
+                  setImage(acceptedFiles[0]);
+                }
+              }}
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  {...getRootProps()}
+                  style={{
+                    border: "1px dashed #ccc",
+                    padding: "10px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop an image here, or click to select one</p>
+                </div>
+              )}
+            </Dropzone>
+            {image && (
+              <div className="mt-3">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Preview"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                    borderRadius: "5px",
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setImage(null)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "red",
+                    cursor: "pointer",
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
+
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
