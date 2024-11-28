@@ -1,5 +1,3 @@
-
-
 // import { React, useEffect } from "react";
 // import CustomInput from "../components/CustomInput";
 // import { useDispatch, useSelector } from "react-redux";
@@ -107,9 +105,6 @@
 
 // export default Addcat;
 
-
-
-
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -118,7 +113,10 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDropzone } from "react-dropzone";
-import { createCategories, resetState } from "../features/product/productSlice";
+import {
+  createCategories,
+  resetState,
+} from "../features/product/productSlice";
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Category Name is Required"),
@@ -131,15 +129,16 @@ const Addcat = () => {
   const newCategory = useSelector((state) => state.product);
   const { isSuccess, isError, createdCategory } = newCategory;
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
-    },
-    maxFiles: 1,
-    onDrop: (acceptedFiles) => {
-      formik.setFieldValue("image", acceptedFiles[0]);
-    }
-  });
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      accept: {
+        "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+      },
+      maxFiles: 1,
+      onDrop: (acceptedFiles) => {
+        formik.setFieldValue("image", acceptedFiles[0]);
+      },
+    });
 
   useEffect(() => {
     if (isSuccess && createdCategory) {
@@ -208,15 +207,22 @@ const Addcat = () => {
                   />
                 </div>
               ) : (
-                <p>{isDragActive ? "Drop the file here" : "Drag & drop an image here, or click to select"}</p>
+                <p>
+                  {isDragActive
+                    ? "Drop the file here"
+                    : "Drag & drop an image here, or click to select"}
+                </p>
               )}
             </div>
-             {formik.touched.image && formik.errors.image && (
+            {formik.touched.image && formik.errors.image && (
               <div className="error">{formik.errors.image}</div>
-            )} 
+            )}
           </div>
 
-          <button className="btn btn-success border-0 rounded-3 my-5" type="submit">
+          <button
+            className="btn btn-success border-0 rounded-3 my-5"
+            type="submit"
+          >
             Add Category
           </button>
         </form>
@@ -226,13 +232,6 @@ const Addcat = () => {
 };
 
 export default Addcat;
-
-
-
-
-
-
-
 
 // import React, { useEffect } from "react";
 // import CustomInput from "../components/CustomInput";
