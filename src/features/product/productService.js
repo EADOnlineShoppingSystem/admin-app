@@ -1,86 +1,129 @@
 import axios from "axios";
-// import { base_url } from "../../utils/base_url";
-// import { config } from "../../utils/axiosconfig";
+const BASE_URL = "http://localhost:6002/api/products";
+//const BASE_URL = 'http://localhost:3500/Product/api/products';
 
-//const BASE_URL = 'http://localhost:6000/api/products';
-const BASE_URL = 'http://localhost:3500/Product/api/products';
-
-
-const createCategory = async(category) => {
-  const response = await axios.post(`${BASE_URL}/add-category`, category);
-  return response.data;
-};
-
-const getCategories = async () => {
-  const response = await axios.get(`${BASE_URL}/categories`);
-  return response.data;
-};
-
-const createProduct = async(product) => {
-  const response = await axios.post(`${BASE_URL}/add-product`, product);
-  return response.data;
-};
-
-//no routes yet
-const getProducts = async() => {
-    const response = await axios.get(`${BASE_URL}/product/`);
-    return response.data;
-};
-
-const getProductsByCategory = async (categoryName) => {
-  const response = await axios.get(`${BASE_URL}/getProducts/${categoryName}`);
-  return response.data;
-};
-
-//no routes yet
-const updateProduct = async (product) => {
-    const response = await axios.put(
-      `${BASE_URL}product/${product.id}`,
-      {
-        title: product.productData.title,
-        description: product.productData.description,
-        price1: product.productData.price1,
-        price2: product.productData.price2,
-        category: product.productData.category,
-        tags: product.productData.tags,
-        storage: product.productData.storage,
-        color: product.productData.color,
-        warranty: product.productData.warranty,
-        quantity: product.productData.quantity,
-        images: product.productData.images,
-        
+// Create a new category
+const createCategory = async (formData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/add-category`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
-    return response.data;
+    });
+    return response.data;  // Updated to match backend response
+  } catch (error) {
+    throw error.response?.data || { message: "Server error" };
+  }
 };
 
-const getProduct = async (id) => {
-    const response = await axios.get(`${BASE_URL}/product/${id}`);
-  
+// Get all categories
+const getCategories = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/categories`);
+    return response.data.categories;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+const updateCategory = async (categoryId, formData) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/update-category/${categoryId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data.category;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+// Create a new product
+const createProduct = async (product) => {
+  try {
+    console.log("product aaa",product)
+    const response = await axios.post(`${BASE_URL}/add-product`, product, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
-  };
-  
-  const deleteProduct = async (id) => {
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+// Get all products
+const getProducts = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/all-products`);
+    return response.data.products;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+// Get products by category
+const getProductsByCategory = async (categoryName) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/getProducts/${categoryName}`);
+    return response.data.products;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+// Update product
+const updateProduct = async (productId, productData) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/update-product/${productId}`,
+      productData
+    );
+    return response.data.product;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+// Get single product by ID
+const getAProduct = async (productId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/product/${productId}`);
+    return response.data.product;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+};
+
+const deleteProduct = async (id) => {
+  try {
     const response = await axios.delete(`${BASE_URL}/product/${id}`);
-  
     return response.data;
-  };
+  } catch (error) {
+    throw error.response?.data || new Error("Server error");
+  }
+};
 
 const productService = {
   createCategory,
-    getProducts,
-    createProduct,
-    updateProduct,
-    getProduct,
-    deleteProduct,
-    getCategories,
-    getProductsByCategory
+  updateCategory,
+  getProducts,
+  createProduct,
+  updateProduct,
+  getAProduct,
+  deleteProduct,
+  getCategories,
+  getProductsByCategory,
 
 };
 
 export default productService;
-
-
 
 // import axios from "axios";
 // import { base_url } from "../../utils/base_url";
@@ -111,7 +154,7 @@ export default productService;
 //         warranty: product.productData.warranty,
 //         quantity: product.productData.quantity,
 //         images: product.productData.images,
-        
+
 //       },
 //       config
 //     );
@@ -120,13 +163,13 @@ export default productService;
 
 // const getProduct = async (id) => {
 //     const response = await axios.get(`${base_url}product/${id}`, config);
-  
+
 //     return response.data;
 //   };
-  
+
 //   const deleteProduct = async (id) => {
 //     const response = await axios.delete(`${base_url}product/${id}`, config);
-  
+
 //     return response.data;
 //   };
 

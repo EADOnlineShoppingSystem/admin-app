@@ -78,11 +78,11 @@ const MainLayout = () => {
                   icon: <BiCategoryAlt className='fs-4' />,
                   label: 'Category',
                 },
-                // {
-                //   key: 'list-category',
-                //   icon: <BiCategoryAlt className='fs-4' />,
-                //   label: 'Category List',
-                // },
+                {
+                  key: 'list-category',
+                  icon: <BiCategoryAlt className='fs-4' />,
+                  label: 'Category List',
+                },
                 // {
                 //   key: 'color',
                 //   icon: <MdOutlineFormatColorFill className='fs-4' />,

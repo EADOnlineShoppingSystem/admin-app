@@ -5,7 +5,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getProducts,
+  getAllProducts,
   deleteAProduct,
   resetState,
 } from "../features/product/productSlice";
@@ -33,7 +33,7 @@ const columns = [
     render: (colors) => (
       <span>
         {Array.isArray(colors) 
-          ? colors.map(color => color.title).join(", ")
+          ? colors.map(colors => colors.title).join(", ")
           : "No color"}
       </span>
     ),
@@ -63,16 +63,16 @@ const Productlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getProducts());
-  }, []);
+    dispatch(getAllProducts());
+  }, [dispatch]);
   const productState = useSelector((state) => state.product.products);
 
   const data1 = productState.map((product, index) => ({
     key: index + 1,
-    title: product.title,
-    category: product.category,
-    color: product.color, // This will now contain the populated color objects
-    price: `${product.price}`,
+    title: product.productTitle,
+    category: product.categoryName,
+    color: product.colors, // This will now contain the populated color objects
+    price: `${product.lowestPrice} - ${product.largestPrice}`,
     action: (
       <>
         <Link
@@ -95,7 +95,7 @@ const Productlist = () => {
     dispatch(deleteAProduct(e));
     setOpen(false);
     setTimeout(() => {
-      dispatch(getProducts());
+      dispatch(getAllProducts());
       toast.success("Product deleted successfully!");
     }, 100);
   };
