@@ -107,7 +107,7 @@ import {
   resetState,
   deleteCategory
 } from "../features/product/productSlice";
-import CustomModal from "../components/CustomModal";
+import CustomModal from "../components/customModal";
 import { AiFillDelete } from "react-icons/ai";
 
 const columns = [

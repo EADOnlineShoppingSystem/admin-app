@@ -106,7 +106,7 @@
 // export default Addcat;
 
 import React, { useState, useEffect } from "react";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/customInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -249,88 +249,3 @@ const Addcat = () => {
 };
 
 export default Addcat;
-
-// import React, { useEffect } from "react";
-// import CustomInput from "../components/CustomInput";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import * as Yup from "yup";
-// import { useFormik } from "formik";
-// import {
-//   createCategories,
-//   resetState,
-// } from "../features/product/productSlice";
-
-// let schema = Yup.object().shape({
-//   name: Yup.string().required("Category Name is Required"),
-// });
-
-// const Addcat = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const newCategory = useSelector((state) => state.product);
-//   const {
-//     isSuccess,
-//     isError,
-//     createdCategory,
-//   } = newCategory;
-
-//   useEffect(() => {
-//     if (isSuccess && createdCategory) {
-//       toast.success("Category Added Successfully!");
-//       navigate("/admin/list-category");
-//     }
-//     if (isError) {
-//       // Log the specific error message
-//       console.error(newCategory.message);
-//       toast.error(newCategory.message || "Something Went Wrong!");
-//     }
-//   }, [isSuccess, isError, createdCategory, navigate, newCategory.message]);
-
-//   const formik = useFormik({
-//     enableReinitialize: true,
-//     initialValues: {
-//       name: "",
-//     },
-//     validationSchema: schema,
-//     onSubmit: (values) => {
-//       dispatch(createCategories(values.name));
-//       formik.resetForm();
-//       setTimeout(() => {
-//         dispatch(resetState());
-//       }, 300);
-//     },
-//   });
-
-//   return (
-//     <div>
-//       <h3 className="mb-4 title">Add Category</h3>
-//       <div>
-//         <form onSubmit={formik.handleSubmit}>
-//           <CustomInput
-//             type="text"
-//             label="Enter Product Category"
-//             val={formik.values.name}
-//             onChg={formik.handleChange("name")}
-//             onBlr={formik.handleBlur("name")}
-//             id="name"
-//           />
-//           {formik.touched.name && formik.errors.name && (
-//             <div className="error">
-//               {formik.errors.name}
-//             </div>
-//           )}
-//           <button
-//             className="btn btn-success border-0 rounded-3 my-5"
-//             type="submit"
-//           >
-//             Add Category
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Addcat;

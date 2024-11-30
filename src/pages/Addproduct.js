@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/customInput";
 import { toast } from "react-toastify";
 import { Select } from "antd";
 import Dropzone from "react-dropzone";

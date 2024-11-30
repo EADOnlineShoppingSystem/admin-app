@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "../components/customInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";

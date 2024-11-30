@@ -216,7 +216,7 @@ import {
   getMonthlyAmountsAndCounts,
 } from "../features/orders/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
-import StatisticCard from "../components/StatisticCard";
+import StatisticCard from "../components/statisticCard";
 
 const columns = [
   {

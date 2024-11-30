@@ -132,7 +132,7 @@ import {
   deleteAProduct,
   resetState,
 } from "../features/product/productSlice";
-import CustomModal from "../components/CustomModal";
+import CustomModal from "../components/customModal";
 import { toast } from "react-toastify";
 
 const columns = [

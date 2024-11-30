@@ -9,7 +9,7 @@ import {
   updateAEnquiry,
   deleteAEnquiry,
 } from "../features/enquiry/enquirySlice";
-import CustomModal from "../components/CustomModal";
+import CustomModal from "../components/customModal";
 import { toast } from "react-toastify";
 
 const Enquiries = () => {

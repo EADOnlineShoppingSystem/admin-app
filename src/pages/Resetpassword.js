@@ -1,6 +1,6 @@
 import React from 'react'
 //import { Input } from 'antd';
-import CustomInput from '../components/CustomInput';
+import CustomInput from '../components/customInput';
 
 const Resetpassword = () => {
   return (
