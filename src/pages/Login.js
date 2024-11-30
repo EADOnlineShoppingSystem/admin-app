@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -16,6 +16,8 @@ let schema = Yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [hover, setHover] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -41,7 +43,7 @@ const Login = () => {
   }, [user, isError, isSuccess, isLoading]);
 
   return (
-    <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
+    <div className="py-5" style={{ background: "#24aec9", minHeight: "100vh" }}>
       <br />
       <br />
       <br />
@@ -90,14 +92,19 @@ const Login = () => {
 
           <button
             className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5"
-            style={{ background: "#ffd333" }}
+            style={{
+              background: hover ? "#106f9c" : "#24aec9",
+              transition: "background-color 0.3s ease",
+            }}
             type="submit"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
             Login
           </button>
-          <Link to="/signup" className="button1 signup">
+          {/* <Link to="/signup" className="button1 signup">
                       SignUp
-                    </Link>
+                    </Link> */}
         </form>
       </div>
     </div>

@@ -27,10 +27,10 @@ const columns = [
     title: 'Date',
     dataIndex: 'date',
   },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
+  // {
+  //   title: 'Status',
+  //   dataIndex: 'status',
+  // },
   {
     title: 'Action',
     dataIndex: 'action',
@@ -58,7 +58,7 @@ const Orders = () => {
       ),
       amount: orderState[i]?.price,
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
-      status: orderState[i]?.orderStatus,
+     // status: orderState[i]?.orderStatus,
       action: (
         <>
           <Link to="/" className="fs-3 text-danger">
