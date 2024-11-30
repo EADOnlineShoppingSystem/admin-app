@@ -10,7 +10,7 @@ const createCategory = async (formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data;  // Updated to match backend response
+    return response.data;
   } catch (error) {
     throw error.response?.data || { message: "Server error" };
   }
@@ -68,16 +68,6 @@ const getProducts = async () => {
   }
 };
 
-// Get products by category
-const getProductsByCategory = async (categoryName) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getProducts/${categoryName}`);
-    return response.data.products;
-  } catch (error) {
-    throw error.response ? error.response.data : new Error("Server error");
-  }
-};
-
 // Update product
 const updateProduct = async (productId, productData) => {
   try {
@@ -119,7 +109,6 @@ const productService = {
   getAProduct,
   deleteProduct,
   getCategories,
-  getProductsByCategory,
 
 };
 

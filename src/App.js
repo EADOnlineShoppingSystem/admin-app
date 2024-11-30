@@ -45,7 +45,7 @@ function App() {
           <Route path="category/:id" element={<Addcat />} />
           <Route path='list-product' element={<Productlist />} />
           <Route path='product' element={<Addproduct />} />
-          <Route path="product/:id" element={<Addproduct />} />
+          <Route path="product/:productId" element={<Addproduct />} />
           {/* <Route path="signup" element={<AdminSignup />}></Route> */}
         </Route>
       </Routes>
