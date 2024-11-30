@@ -86,7 +86,20 @@ export const deleteAProduct = createAsyncThunk(
   "product/delete-product",
   async (id, thunkAPI) => {
     try {
-      return await productService.deleteProduct(id);
+      const response = await productService.deleteProduct(id);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteCategory = createAsyncThunk(
+  "product/delete-category",
+  async (categoryId, thunkAPI) => {
+    try {
+      const response = await productService.deleteCategory(categoryId);
+      return { categoryId, response };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -225,17 +238,45 @@ export const productSlice = createSlice({
         .addCase(deleteAProduct.pending, (state) => {
           state.isLoading = true;
         })
+        // .addCase(deleteAProduct.fulfilled, (state, action) => {
+        //   state.isLoading = false;
+        //   state.isError = false;
+        //   state.isSuccess = true;
+        //   state.deletedProduct = action.payload;
+        // })
         .addCase(deleteAProduct.fulfilled, (state, action) => {
           state.isLoading = false;
           state.isError = false;
           state.isSuccess = true;
           state.deletedProduct = action.payload;
+          // Remove the deleted product from the products array immediately
+          state.products = state.products.filter(
+            (product) => product._id !== action.payload.productId
+          );
         })
         .addCase(deleteAProduct.rejected, (state, action) => {
           state.isLoading = false;
           state.isError = true;
           state.isSuccess = false;
           state.message = action.error;
+        })
+        .addCase(deleteCategory.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(deleteCategory.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isError = false;
+          state.isSuccess = true;
+          state.categories = state.categories.filter(
+            category => category._id !== action.payload.categoryId
+          );
+          state.message = "Category deleted successfully";
+        })
+        .addCase(deleteCategory.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.isSuccess = false;
+          state.message = action.payload?.message || "Failed to delete category";
         })
        .addCase(resetState, () => initialState);
   },

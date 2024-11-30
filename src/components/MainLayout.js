@@ -32,8 +32,8 @@ const MainLayout = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical">
           <h2 className='text-white fs-5 text-center py-4 mb-0'>
-            <span className='sm-logo'>NGD</span>
-            <span className='lg-logo'>NextGen Dresses</span>
+            <span className='sm-logo'>HD</span>
+            <span className='lg-logo'>HandFree.lk</span>
           </h2>
         </div>
         <Menu

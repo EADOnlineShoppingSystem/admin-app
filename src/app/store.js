@@ -6,7 +6,7 @@ import pcategoryReducer from "../features/pcategory/pcategorySlice";
 import colorReducer from "../features/color/colorSlice";
 import enquiryReducer from "../features/enquiry/enquirySlice"
 import uploadReducer from "../features/upload/uploadSlice";
-import couponReducer from "../features/coupon/couponSlice";
+//import couponReducer from "../features/coupon/couponSlice";
 import orderReducer from "../features/orders/orderSlice";
 
 export const store = configureStore({
@@ -18,7 +18,7 @@ export const store = configureStore({
     color: colorReducer,
     enquiry: enquiryReducer,
     upload: uploadReducer,
-    coupon: couponReducer,
+    //coupon: couponReducer,
     order: orderReducer,
   },
 });

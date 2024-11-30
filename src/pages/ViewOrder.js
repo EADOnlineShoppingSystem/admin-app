@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { FaRegEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrdersByUserId, getAllOrders } from "../features/orders/orderSlice";
+import { getOrdersByUserId } from "../features/orders/orderSlice";
 import { Link, useLocation } from "react-router-dom";
 
 
@@ -49,7 +49,7 @@ const ViewOrder = () => {
   useEffect(() => {
     dispatch(getOrdersByUserId(userId));
   }, []);
-
+ 
   
   const orderState = useSelector((state) => state?.order?.orderbyuser?.[0]?.products || []);
 
@@ -58,8 +58,8 @@ const ViewOrder = () => {
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
-      name: orderState[i]?.product?.productTitle,
-      category: orderState[i].product.categoryName,
+      name: orderState[i]?.productDetails?.productTitle,
+      category: orderState[i].productDetails?.categoryName,
       count: orderState[i].count,
       amount: orderState[i].product.price,
       color: orderState[i].product.colors,
@@ -88,3 +88,4 @@ const ViewOrder = () => {
 };
 
 export default ViewOrder;
+

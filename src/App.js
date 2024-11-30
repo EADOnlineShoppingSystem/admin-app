@@ -14,8 +14,8 @@ import Productlist from './pages/Productlist';
 //import Addcolor from './pages/Addcolor';
 import Addcat from './pages/Addcat';
 import Addproduct from './pages/Addproduct';
-import AddCoupon from './pages/AddCoupon';
-import Couponlist from './pages/Couponlist';
+// import AddCoupon from './pages/AddCoupon';
+// import Couponlist from './pages/Couponlist';
 import ViewEnq from './pages/ViewEnq';
 import ViewOrder from './pages/ViewOrder';
 //import AdminSignup from './pages/AdminSignup';
@@ -37,9 +37,9 @@ function App() {
           <Route path='list-color' element={<Colorlist />} />
           {/* <Route path='color' element={<Addcolor />} />
           <Route path="color/:id" element={<Addcolor />} /> */}
-          <Route path='coupon-list' element={<Couponlist />} />
+          {/* <Route path='coupon-list' element={<Couponlist />} />
           <Route path='coupon' element={<AddCoupon />} />
-          <Route path="coupon/:id" element={<AddCoupon />} />
+          <Route path="coupon/:id" element={<AddCoupon />} /> */}
           <Route path='list-category' element={<Categorylist />} />
           <Route path='category' element={<Addcat />} />
           <Route path="category/:id" element={<Addcat />} />

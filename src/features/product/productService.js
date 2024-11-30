@@ -58,6 +58,15 @@ const createProduct = async (product) => {
   }
 };
 
+const deleteCategory = async (categoryId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/delete-category/${categoryId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || new Error("Server error");
+  }
+};
+
 // Get all products
 const getProducts = async () => {
   try {
@@ -93,7 +102,7 @@ const getAProduct = async (productId) => {
 
 const deleteProduct = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/product/${id}`);
+    const response = await axios.delete(`${BASE_URL}/delete-product/${id}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || new Error("Server error");
@@ -103,6 +112,7 @@ const deleteProduct = async (id) => {
 const productService = {
   createCategory,
   updateCategory,
+  deleteCategory ,
   getProducts,
   createProduct,
   updateProduct,
