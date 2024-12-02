@@ -46,7 +46,7 @@ const updateCategory = async (categoryId, formData) => {
 // Create a new product
 const createProduct = async (product) => {
   try {
-    console.log("product aaa",product)
+    console.log("product aaa", product);
     const response = await axios.post(`${BASE_URL}/add-product`, product, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -60,7 +60,9 @@ const createProduct = async (product) => {
 
 const deleteCategory = async (categoryId) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/delete-category/${categoryId}`);
+    const response = await axios.delete(
+      `${BASE_URL}/delete-category/${categoryId}`
+    );
     return response.data;
   } catch (error) {
     throw error.response?.data || new Error("Server error");
@@ -112,14 +114,13 @@ const deleteProduct = async (id) => {
 const productService = {
   createCategory,
   updateCategory,
-  deleteCategory ,
+  deleteCategory,
   getProducts,
   createProduct,
   updateProduct,
   getAProduct,
   deleteProduct,
   getCategories,
-
 };
 
 export default productService;

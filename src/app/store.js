@@ -2,11 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import customerReducer from "../features/customers/customerSlice";
 import productReducer from "../features/product/productSlice";
-import pcategoryReducer from "../features/pcategory/pcategorySlice";
 import colorReducer from "../features/color/colorSlice";
 import enquiryReducer from "../features/enquiry/enquirySlice"
-import uploadReducer from "../features/upload/uploadSlice";
-//import couponReducer from "../features/coupon/couponSlice";
 import orderReducer from "../features/orders/orderSlice";
 
 export const store = configureStore({
@@ -14,11 +11,8 @@ export const store = configureStore({
     auth: authReducer,
     customer: customerReducer,
     product: productReducer,
-    pcategory: pcategoryReducer,
     color: colorReducer,
     enquiry: enquiryReducer,
-    upload: uploadReducer,
-    //coupon: couponReducer,
     order: orderReducer,
   },
 });
